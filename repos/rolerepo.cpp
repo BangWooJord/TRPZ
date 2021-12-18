@@ -3,6 +3,7 @@
 #include <QtSql/QSqlQuery>
 
 #include "rolerepo.h"
+#include "../role.h"
 
 RoleRepo::RoleRepo()
 {

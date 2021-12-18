@@ -26,10 +26,10 @@ int main(int argc, char *argv[])
     const auto managerIDs = repodb.workerRepo()->find({{"Role", std::to_string(managerID[0])}});
     if(!managerIDs.size())
         return 1;
-    qDebug() << managerIDs[0];
     const auto manager = repodb.workerRepo()->get(managerIDs[0]);
-    if(manager)
-        qDebug() << manager->getName() << manager->getSurname() << manager->getSalary();
-    else qDebug() << "bruh";
+    if(!manager)
+        return 1;
+    qDebug() << manager->getName() << manager->getSurname() << manager->getSalary();
+
     return a.exec();
 }

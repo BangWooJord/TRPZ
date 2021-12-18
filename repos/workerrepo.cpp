@@ -4,7 +4,7 @@
 
 #include "rolerepo.h"
 #include "workerrepo.h"
-#include "worker.h"
+#include "../worker.h"
 #include "repodb.h"
 
 WorkerRepo::WorkerRepo(RepoDB* parent)

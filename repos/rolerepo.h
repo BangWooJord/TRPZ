@@ -2,7 +2,8 @@
 #define ROLEREPO_H
 
 #include "baserepo.h"
-#include "role.h"
+
+class Role;
 
 class RoleRepo : public BaseRepo<Role>
 {
