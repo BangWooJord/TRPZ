@@ -1,6 +1,6 @@
 #ifndef REPODB_H
 #define REPODB_H
-#include <QDebug>
+
 class WorkerRepo;
 class RoleRepo;
 
@@ -12,7 +12,6 @@ public:
 
     const auto workerRepo()  { return this->m_workerRepo;    }
     const auto roleRepo()    { return this->m_roleRepo;      }
-    void echo() {qDebug() << "echo";};
 
 private:
     WorkerRepo *m_workerRepo;

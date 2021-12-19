@@ -1,6 +1,7 @@
 #include <QtTest/QtTest>
 #include <QtSql/QSqlDatabase>
 #include <QtSql/QSql>
+#include "../repos/repodb.h"
 #include "../repos/rolerepo.h"
 #include "../role.h"
 #include "../repos/workerrepo.h"
@@ -25,11 +26,11 @@ private slots:
         QCOMPARE(repo.get(0)->getName(), "Office");
     }
 
-//    void workerDB()
-//    {
-//        WorkerRepo repo;
-//        QCOMPARE(repo.get(0)->getName(), "Alex");
-//    }
+    void workerDB()
+    {
+        WorkerRepo repo(new RepoDB());
+        QCOMPARE(repo.get(0)->getName(), "Alex");
+    }
 };
 
 QTEST_MAIN(TestSQL)
