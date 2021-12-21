@@ -46,6 +46,7 @@ private slots:
         delete service;
         QFAIL("Exception was supposed to be caught");
     }
+
 };
 
 QTEST_MAIN(TestSQL)
