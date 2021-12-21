@@ -1,10 +1,13 @@
 #include <QtTest/QtTest>
 #include <QtSql/QSqlDatabase>
 #include <QtSql/QSql>
+#include <QException>
 #include "../repos/repodb.h"
 #include "../repos/rolerepo.h"
 #include "../role.h"
 #include "../repos/workerrepo.h"
+#include "../services/workerservice.h"
+#include "../exceptions/CustomQtExceptions.hpp"
 #include "../worker.h"
 
 class TestSQL: public QObject
@@ -28,8 +31,20 @@ private slots:
 
     void workerDB()
     {
-        WorkerRepo repo(new RepoDB());
+        WorkerRepo repo;
         QCOMPARE(repo.get(0)->getName(), "Alex");
+    }
+
+    void WorkerServiceConstructor()
+    {
+        WorkerService* service;
+        try{
+            service = new WorkerService(nullptr);
+        }catch(CustomQtExceptions &e){
+            return;
+        }
+        delete service;
+        QFAIL("Exception was supposed to be caught");
     }
 };
 

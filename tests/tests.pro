@@ -1,7 +1,7 @@
 QT -= gui
 QT += testlib sql
 
-CONFIG += c++11 console
+CONFIG += c++17 console
 CONFIG -= app_bundle
 
 # You can make your code fail to compile if it uses deprecated APIs.
@@ -13,6 +13,8 @@ SOURCES += \
         ../repos/repodb.cpp \
         ../repos/rolerepo.cpp \
         ../repos/workerrepo.cpp \
+        ../repos/warehouserepo.cpp \
+        ../services/workerservice.cpp
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
@@ -20,7 +22,14 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 HEADERS += \
+    ../worker.h\
+    ../role.h\
+    ../warehouse.h\
     ../repos/baserepo.h \
     ../repos/repodb.h \
     ../repos/rolerepo.h \
-    ../repos/workerrepo.h
+    ../repos/workerrepo.h \
+    ../repos/warehouserepo.h \
+    ../services/workerservice.h \
+    ../security/securitycontext.h
+    ../exceptions/CustomQtExceptions.hpp

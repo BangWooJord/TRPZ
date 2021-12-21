@@ -62,7 +62,8 @@ void RoleRepo::Update(Role item)
 {
     if(!get(item.getID())) return;
     QSqlQuery query;
-    query.exec(QString("UPDATE Roles SET Name='%1'").arg(item.getName()));
+    query.exec(QString("UPDATE Roles SET Name='%1'"
+                       " WHERE ID=%2").arg(item.getName()).arg(item.getID()));
 }
 
 void RoleRepo::Delete(int id)

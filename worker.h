@@ -9,11 +9,11 @@ public:
     Worker(const uint& id, const QString& name
            , const QString& surname, const QString& patronymic
            , const QString& phone, const float& salary
-           , const uint& warehouseID, const Role& role)
+           , const uint& warehouseID, const uint& roleID)
         :m_ID(id), m_Name(name), m_Surname(surname)
         , m_Patronymic(patronymic), m_Phone(phone)
         , m_Salary(salary), m_WarehouseID(warehouseID)
-        , m_role(role){};
+        , m_RoleID(roleID){};
 
     inline const auto getID()          { return this->m_ID;            }
     inline const auto getName()        { return this->m_Name;          }
@@ -22,7 +22,7 @@ public:
     inline const auto getPhone()       { return this->m_Phone;         }
     inline const auto getSalary()      { return this->m_Salary;        }
     inline const auto getWarehouseID() { return this->m_WarehouseID;   }
-    inline const auto getRole()        { return this->m_role;          }
+    inline const auto getRoleID()      { return this->m_RoleID;        }
 
     inline void setID(const uint& id)
         { this->m_ID = id; }
@@ -38,8 +38,8 @@ public:
         { this->m_Salary = salary; }
     inline void setWarehouseID(const uint& warehouseID)
         { this->m_WarehouseID = warehouseID; }
-    inline void setRole(const Role& role)
-        { this->m_role = role; }
+    inline void setRoleID(const uint& roleID)
+        { this->m_RoleID = roleID; }
 
 private:
     uint m_ID;
@@ -49,7 +49,7 @@ private:
     QString m_Phone;
     float m_Salary;
     uint m_WarehouseID;
-    Role m_role;
+    uint m_RoleID;
 };
 
 #endif // WORKER_H

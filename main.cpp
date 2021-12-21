@@ -3,10 +3,14 @@
 #include <QtSql/QSqlQuery>
 #include <QDebug>
 
+#include "services/workerservice.h"
+#include "dto/workerdto.h"
 #include "repos/repodb.h"
-#include "repos/rolerepo.h"
-#include "repos/workerrepo.h"
-#include "worker.h"
+#include "security/securitycontext.h"
+#include "security/manager.h"
+#include "security/director.h"
+#include "security/admin.h"
+#include "exceptions/CustomQtExceptions.hpp"
 
 int main(int argc, char *argv[])
 {
@@ -18,18 +22,24 @@ int main(int argc, char *argv[])
     qdb.setDatabaseName(connectionString);
     qDebug() << "Connection to database: " << qdb.open();
 
-
     RepoDB repodb;
-    const auto managerID = repodb.roleRepo()->find({{"Name", "'Manager'"}});
-    if(!managerID.size())
-        return 1;
-    const auto managerIDs = repodb.workerRepo()->find({{"Role", std::to_string(managerID[0])}});
-    if(!managerIDs.size())
-        return 1;
-    const auto manager = repodb.workerRepo()->get(managerIDs[0]);
-    if(!manager)
-        return 1;
-    qDebug() << manager->getName() << manager->getSurname() << manager->getSalary();
+    WorkerService* service;
+    try{
+        service = new WorkerService(&repodb);
+    }catch(CustomQtExceptions &e){
+        return 0;
+    }
+
+    User* user = new Manager(1);
+    SecurityContext::setUser(*user);
+
+    auto workers = service->getWorkers();
+    if(workers.empty()) qDebug() << "No access";
+    else{
+        for(auto worker: workers){
+            qDebug() << worker.getName();
+        }
+    }
 
     return a.exec();
 }
