@@ -1,7 +1,8 @@
 #ifndef WORKER_H
 #define WORKER_H
 
-#include "role.h"
+#include <QString>
+#include <stdint.h>
 
 class Worker
 {

@@ -1,5 +1,4 @@
-QT -= gui
-QT += sql
+QT += gui sql qml quick
 
 CONFIG += c++17 console
 CONFIG -= app_bundle
@@ -12,6 +11,7 @@ SOURCES += \
         main.cpp \
         repos/repodb.cpp \
         repos/rolerepo.cpp \
+        repos/userrepo.cpp \
         repos/warehouserepo.cpp \
         repos/workerrepo.cpp \
         services/workerservice.cpp
@@ -27,15 +27,21 @@ HEADERS += \
     repos/baserepo.h \
     repos/repodb.h \
     repos/rolerepo.h \
+    repos/userrepo.h \
     repos/warehouserepo.h \
     repos/workerrepo.h \
     role.h \
     security/admin.h \
+    security/creator.h \
     security/director.h \
     security/manager.h \
     security/securitycontext.h \
     security/user.h \
     services/workerservice.h \
+    users.h \
     warehouse.h \
     worker.h \
     exceptions/CustomQtExceptions.hpp
+
+RESOURCES += \
+    qml/resource.qrc

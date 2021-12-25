@@ -1,4 +1,6 @@
-#include <QCoreApplication>
+#include <QGuiApplication>
+#include <QtQml/QQmlApplicationEngine>
+#include <QtQml/QQmlContext>
 #include <QtSql/QSqlDatabase>
 #include <QtSql/QSqlQuery>
 #include <QDebug>
@@ -14,7 +16,14 @@
 
 int main(int argc, char *argv[])
 {
-    QCoreApplication a(argc, argv);
+    QGuiApplication a(argc, argv);
+    QQmlApplicationEngine engine;
+    const QUrl url(QStringLiteral("qrc:/main.qml"));
+    QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,
+        &a, [&](QObject *obj, const QUrl &objUrl) {
+            if (!obj && url == objUrl)
+                QCoreApplication::exit(-1);
+    }, Qt::QueuedConnection);
 
     QSqlDatabase qdb = QSqlDatabase::addDatabase("QODBC3");
     qdb.setConnectOptions();
@@ -22,10 +31,10 @@ int main(int argc, char *argv[])
     qdb.setDatabaseName(connectionString);
     qDebug() << "Connection to database: " << qdb.open();
 
-    RepoDB repodb;
+    RepoDB* repodb = RepoDB::getInstance();
     WorkerService* service;
     try{
-        service = new WorkerService(&repodb);
+        service = new WorkerService(repodb);
     }catch(CustomQtExceptions &e){
         return 0;
     }
@@ -41,5 +50,8 @@ int main(int argc, char *argv[])
         }
     }
 
+    engine.rootContext()->setContextProperty("BackendRepo", repodb->getInstance());
+
+    engine.load(url);
     return a.exec();
 }
