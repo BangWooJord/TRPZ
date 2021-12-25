@@ -3,5 +3,9 @@
         <file>main.qml</file>
         <file>LoginWindow.qml</file>
         <file>MainWindow.qml</file>
+        <file>AdminWindow.qml</file>
+        <file>UsersPage.qml</file>
+        <file>NewUserForm.qml</file>
+        <file>NewWorkerForm.qml</file>
     </qresource>
 </RCC>

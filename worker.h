@@ -16,14 +16,14 @@ public:
         , m_Salary(salary), m_WarehouseID(warehouseID)
         , m_RoleID(roleID){};
 
-    inline const auto getID()          { return this->m_ID;            }
-    inline const auto getName()        { return this->m_Name;          }
-    inline const auto getSurname()     { return this->m_Surname;       }
-    inline const auto getPatronymic()  { return this->m_Patronymic;    }
-    inline const auto getPhone()       { return this->m_Phone;         }
-    inline const auto getSalary()      { return this->m_Salary;        }
-    inline const auto getWarehouseID() { return this->m_WarehouseID;   }
-    inline const auto getRoleID()      { return this->m_RoleID;        }
+    inline auto getID()          const { return this->m_ID;            }
+    inline auto getName()        const { return this->m_Name;          }
+    inline auto getSurname()     const { return this->m_Surname;       }
+    inline auto getPatronymic()  const { return this->m_Patronymic;    }
+    inline auto getPhone()       const { return this->m_Phone;         }
+    inline auto getSalary()      const { return this->m_Salary;        }
+    inline auto getWarehouseID() const { return this->m_WarehouseID;   }
+    inline auto getRoleID()      const { return this->m_RoleID;        }
 
     inline void setID(const uint& id)
         { this->m_ID = id; }

@@ -14,19 +14,38 @@ Window{
         anchors.fill: parent
     }
 
+    AdminWindow{
+        id: adminWindow
+        anchors.fill: parent
+        visible: false
+
+        function logOut(){
+            visible = false
+            changeWindowSize(640, 480)
+            loginWindow.visible = true
+        }
+    }
+
     Connections{
         target: BackendRepo
 
-        function onAuthAccepted(){
-            mainWindow.visible = false
-            mainWindow.width = 1024
-            loginWindow.visible = false
-            x = Screen.width / 2 - width / 2
-            y = Screen.height / 2 - height / 2
-            mainWindow.visible = true
+        function onAuthAccepted(username){
+            changeWindowSize(1024, 640)
+            adminWindow.visible = true
+            adminWindow.userName = username
         }
         function onAuthDenied(){
             console.log("Authentication failed")
         }
+    }
+
+    function changeWindowSize(new_width, new_height){
+        mainWindow.visible = false
+        if(new_width)mainWindow.width = new_width
+        if(new_height)mainWindow.height = new_height
+        loginWindow.visible = false
+        x = Screen.width / 2 - width / 2
+        y = Screen.height / 2 - height / 2
+        mainWindow.visible = true
     }
 }

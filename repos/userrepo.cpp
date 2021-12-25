@@ -34,9 +34,10 @@ std::vector<Users> UserRepo::getAll()
     query.exec("SELECT * FROM Users");
     while(query.next()){
         item_list.push_back(Users(query.value("ID").toUInt()
-                                   ,query.value("Username").toString()
-                                   ,query.value("Password").toString()
-                                   ,query.value("UserType").toUInt()));
+                                  ,query.value("Username").toString()
+                                  ,query.value("Password").toString()
+                                  ,query.value("UserType").toUInt()
+                                  ,query.value("WorkerID").toUInt()));
     }
 
     return item_list;
@@ -51,17 +52,19 @@ Users* UserRepo::get(int id)
                ? new Users(query.value("ID").toUInt()
                     ,query.value("Username").toString()
                     ,query.value("Password").toString()
-                    ,query.value("UserType").toUInt())
+                    ,query.value("UserType").toUInt()
+                    ,query.value("WorkerID").toUInt())
                : nullptr;
 }
 
 void UserRepo::Create(Users item)
 {
     QSqlQuery query;
-    query.exec(QString("INSERT INTO Users (ID, Username, Password, UserType)"
-                       " VALUES (%1, '%2', '%3', %4)")
-                   .arg(item.getID()).arg(item.getUsername())
-                   .arg(item.getPassword()).arg(item.getUserType()));
+    query.exec(QString("INSERT INTO Users (Username, Password, UserType, WorkerID)"
+                       " VALUES ('%1', '%2', %3, %4)")
+                   .arg(item.getUsername())
+                   .arg(item.getPassword()).arg(item.getUserType())
+                   .arg(item.getWorkerID()));
 }
 
 void UserRepo::Update(Users item)
@@ -69,8 +72,9 @@ void UserRepo::Update(Users item)
     if(!get(item.getID())) return;
     QSqlQuery query;
     query.exec(QString("UPDATE Users SET Username='%1', Password='%2'"
-                       ", UserType=%3").arg(item.getUsername())
-                   .arg(item.getPassword()).arg(item.getUserType()));
+                       ", UserType=%3, WorkerID=%4").arg(item.getUsername())
+                   .arg(item.getPassword()).arg(item.getUserType())
+                   .arg(item.getWorkerID()));
 }
 
 void UserRepo::Delete(int id)

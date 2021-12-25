@@ -47,6 +47,25 @@ Item {
         }
         width: 250
         height: 60
+        echoMode: TextInput.Password
+    }
+    Button{
+        id: revealPassword
+        text: "👁"
+        scale: 1.5
+        background: Rectangle{
+            color: 'transparent'
+        }
+        anchors{
+            right: passwordInput.right
+            rightMargin: 10
+            verticalCenter: passwordInput.verticalCenter
+        }
+        onClicked: {
+            passwordInput.echoMode =
+                    (passwordInput.echoMode === TextInput.Password)
+                    ? TextInput.Normal : TextInput.Password
+        }
     }
 
     Label{
@@ -102,10 +121,18 @@ Item {
             radius: 5
             border.width: 0
         }
+        font.pixelSize: 16
 
         onClicked: {
             BackendRepo.authUser(usernameInput.text, passwordInput.text)
+            usernameInput.clear()
+            passwordInput.clear()
         }
     }
 
+    focus: true
+    Keys.onPressed: {
+        if(event.key === Qt.Key_Return)
+            connectBtn.clicked()
+    }
 }

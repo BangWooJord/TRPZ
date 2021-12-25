@@ -11,10 +11,10 @@ public:
               const QString& city, const uint& managerID)
         :m_ID(id), m_Address(addr), m_City(city), m_ManagerID(managerID) {};
 
-    inline const auto getID()       { return this->m_ID;        }
-    inline const auto getAddress()  { return this->m_Address;   }
-    inline const auto getCity()     { return this->m_City;      }
-    inline const auto getManagerID(){ return this->m_ManagerID; }
+    inline auto getID()       const { return this->m_ID;        }
+    inline auto getAddress()  const { return this->m_Address;   }
+    inline auto getCity()     const { return this->m_City;      }
+    inline auto getManagerID()const { return this->m_ManagerID; }
 
     inline void setID(const uint& id)
     { this->m_ID = id; }

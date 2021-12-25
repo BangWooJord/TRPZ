@@ -10,8 +10,8 @@ public:
     Role(const uint& id, const QString& name):
         m_ID(id), m_Name(name) {};
 
-    inline auto getID()  { return this->m_ID;    }
-    inline auto getName(){ return this->m_Name;  }
+    inline auto getID()  const { return this->m_ID;    }
+    inline auto getName()const { return this->m_Name;  }
 
     inline void setID(const uint& id)       { this->m_ID = id;      }
     inline void setName(const QString& name){ this->m_Name = name;  }

@@ -13,6 +13,7 @@
 #include "security/director.h"
 #include "security/admin.h"
 #include "exceptions/CustomQtExceptions.hpp"
+#include "models/usermodel.cpp"
 
 int main(int argc, char *argv[])
 {
@@ -31,26 +32,12 @@ int main(int argc, char *argv[])
     qdb.setDatabaseName(connectionString);
     qDebug() << "Connection to database: " << qdb.open();
 
-    RepoDB* repodb = RepoDB::getInstance();
-    WorkerService* service;
-    try{
-        service = new WorkerService(repodb);
-    }catch(CustomQtExceptions &e){
-        return 0;
-    }
+    auto repodb = RepoDB::getInstance();
 
-    User* user = new Manager(1);
-    SecurityContext::setUser(*user);
-
-    auto workers = service->getWorkers();
-    if(workers.empty()) qDebug() << "No access";
-    else{
-        for(auto worker: workers){
-            qDebug() << worker.getName();
-        }
-    }
+    auto userModel = new UserModel(repodb->getInstance(), &a);
 
     engine.rootContext()->setContextProperty("BackendRepo", repodb->getInstance());
+    engine.rootContext()->setContextProperty("BackendUserModel", userModel);
 
     engine.load(url);
     return a.exec();

@@ -9,6 +9,7 @@ CONFIG -= app_bundle
 
 SOURCES += \
         main.cpp \
+        models/usermodel.cpp \
         repos/repodb.cpp \
         repos/rolerepo.cpp \
         repos/userrepo.cpp \
@@ -24,6 +25,7 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 HEADERS += \
     dto/roledto.h \
     dto/workerdto.h \
+    models/usermodel.h \
     repos/baserepo.h \
     repos/repodb.h \
     repos/rolerepo.h \
