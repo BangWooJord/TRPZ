@@ -15,6 +15,8 @@ public:
     void Create(Worker item) override;
     void Update(Worker item) override;
     void Delete(int id) override;
+
+    std::vector<Worker> getSorted(const int& sort) override;
 };
 
 #endif // WORKERREPO_H

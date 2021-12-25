@@ -81,3 +81,33 @@ void WarehouseRepo::Delete(int id)
     QSqlQuery query;
     query.exec(QString("DELETE FROM Warehouses WHERE ID=%1").arg(id));
 }
+
+std::vector<Warehouse> WarehouseRepo::getSorted(const int &sort)
+{
+    QStringList sort_keys;
+    switch (sort) {
+    case WAREHOUSE_FILTERS::IDUp:
+        sort_keys << "ID ASC";
+        break;
+    case WAREHOUSE_FILTERS::IDDown:
+        sort_keys << "ID DESC";
+        break;
+    }
+
+
+    std::vector<Warehouse> item_list;
+    QString string_query = "SELECT * FROM Warehouses ORDER BY ";
+    for(const auto& key: sort_keys){
+        string_query.append(key + ", ");
+    }
+    string_query.chop(1);
+    QSqlQuery query;
+    query.exec(string_query);
+    while(query.next()){
+        item_list.push_back(Warehouse(query.value("ID").toUInt()
+                                      ,query.value("Address").toString()
+                                      ,query.value("City").toString()
+                                      ,query.value("ManagerID").toUInt()));
+    }
+    return item_list;
+}

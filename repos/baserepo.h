@@ -18,6 +18,9 @@ public:
     virtual void Create(T item) = 0;
     virtual void Update(T item) = 0;
     virtual void Delete(int id) = 0;
+
+    virtual std::vector<T> getSorted(const int& sort) = 0;
+    virtual std::vector<T> getFiltered(const std::map<std::string, std::string> filters) = 0;
 };
 
 #endif // BASEREPO_H

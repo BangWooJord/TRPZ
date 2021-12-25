@@ -15,6 +15,8 @@ public:
     void Create(Role item) override;
     void Update(Role item) override;
     void Delete(int id) override;
+
+    std::vector<Role> getSorted(const int& sort) override;
 };
 
 #endif // ROLEREPO_H

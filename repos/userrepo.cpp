@@ -83,3 +83,36 @@ void UserRepo::Delete(int id)
     QSqlQuery query;
     query.exec(QString("DELETE FROM Users WHERE ID=%1").arg(id));
 }
+
+std::vector<Users> UserRepo::getSorted(const int &sort)
+{
+    QStringList sort_keys;
+    switch (sort) {
+    case USER_FILTERS::NameUp:
+        qDebug() << "NameUp";
+        sort_keys << "Name ASC";
+        break;
+    case USER_FILTERS::NameDown:
+        qDebug() << "NameDown";
+        sort_keys << "Name DESC";
+        break;
+    }
+
+
+    std::vector<Users> item_list;
+    QString string_query = "SELECT * FROM Users ORDER BY ";
+    for(const auto& key: sort_keys){
+        string_query.append(key + ", ");
+    }
+    string_query.chop(1);
+    QSqlQuery query;
+    query.exec(string_query);
+    while(query.next()){
+        item_list.push_back(Users(query.value("ID").toUInt()
+                                  ,query.value("Username").toString()
+                                  ,query.value("Password").toString()
+                                  ,query.value("UserType").toUInt()
+                                  ,query.value("WorkerID").toUInt()));
+    }
+    return item_list;
+}
