@@ -1,4 +1,4 @@
-#ifndef USERMODEL_H
+﻿#ifndef USERMODEL_H
 #define USERMODEL_H
 
 #include <QAbstractListModel>
@@ -23,10 +23,15 @@ public:
     explicit UserModel(RepoDB* repodb, QObject *parent = nullptr);
 
     Q_INVOKABLE void loadUsers();
-    Q_INVOKABLE void clearModel();
     Q_INVOKABLE void reloadUsers();
-
+    Q_INVOKABLE void sortUsers(const int& sort);
+    Q_INVOKABLE void loadFilteredUsers(const QStringList& filters);
     Q_INVOKABLE void deleteUser(const int& id);
+
+    Q_INVOKABLE QList<qreal> getAllSalaries();
+    Q_INVOKABLE QStringList getNCharsOf(const QString& target, const int& count);
+
+    Q_INVOKABLE void clearModel();
 
     virtual int rowCount(const QModelIndex & parent = QModelIndex()) const override;
     virtual QVariant data( const QModelIndex & index, int role = Qt::DisplayRole ) const override;
@@ -42,7 +47,6 @@ signals:
     void rowCountChanged(int count);
 
 private:
-
     QList<Users> m_data;
     RepoDB* m_db;
 

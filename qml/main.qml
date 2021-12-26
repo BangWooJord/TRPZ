@@ -26,13 +26,30 @@ Window{
         }
     }
 
+    ManagerWindow{
+        id: managerWindow
+        anchors.fill: parent
+        visible: false
+
+        function logOut(){
+            visible = false
+            changeWindowSize(640, 480)
+            loginWindow.visible = true
+        }
+    }
+
     Connections{
         target: BackendRepo
 
-        function onAuthAccepted(username){
+        function onAuthAccepted(username, userType){
             changeWindowSize(1024, 640)
-            adminWindow.visible = true
-            adminWindow.userName = username
+            if(userType === "Admin"){
+                adminWindow.visible = true
+                adminWindow.userName = username
+            }else if(userType === "Manager"){
+                managerWindow.visible = true
+                managerWindow.userName = username
+            }
         }
         function onAuthDenied(){
             console.log("Authentication failed")

@@ -10,8 +10,10 @@ class UserRepo : public BaseRepo<Users>
 {
 public:
     enum USER_FILTERS{
-        NameUp,
-        NameDown
+        UsernameUp,
+        UsernameDown,
+        UserTypeUp,
+        UserTypeDown
     };
 
     UserRepo();
@@ -23,6 +25,7 @@ public:
     void Delete(int id) override;
 
     std::vector<Users> getSorted(const int& sort) override;
+    QStringList getNCharsOf(const QString& target, const int& count);
 };
 
 #endif // USERREPO_H

@@ -24,16 +24,8 @@ MainWindow{
             hoverEnabled: true
         }
 
-        ToolTip{
-            background: Rectangle{
-                radius: 5
-                border.width: 3
-                border.color: '#57b1cf'
-            }
-            visible: mousearea.containsMouse
-            text: 'Admin'
-            font.pixelSize: 16
-        }
+        ToolTip.visible: mousearea.containsMouse
+        ToolTip.text: 'Manager'
     }
 
     Column{
@@ -43,30 +35,6 @@ MainWindow{
             top: headingLabel.bottom
         }
 
-        Button{
-            id: usersBtn
-            width: parent.width
-            height: 50
-            text: "Користувачі"
-            font.pixelSize: 16
-            font.bold: true
-            contentItem: Text{
-                text: parent.text
-                font: parent.font
-                color: (selectedBtn === parent.text)
-                       ? 'black' : 'white'
-                horizontalAlignment: Text.AlignHCenter
-                verticalAlignment: Text.AlignVCenter
-            }
-            background: Rectangle{
-                color: (selectedBtn === parent.text)
-                     ? 'white' : '#add8e6'
-            }
-
-            onClicked: {
-                selectedBtn = usersBtn.text
-            }
-        }
         Button{
             id: warehousesBtn
             width: parent.width
@@ -135,9 +103,6 @@ MainWindow{
             }
 
             visible: selectedBtn === "Користувачі"
-        }
-        NewUserForm{
-            id: newUserForm
         }
         NewWorkerForm{
             id: newWorkerForm

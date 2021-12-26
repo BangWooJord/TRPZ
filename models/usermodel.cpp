@@ -35,10 +35,52 @@ void UserModel::reloadUsers()
     loadUsers();
 }
 
+void UserModel::sortUsers(const int &sort)
+{
+    clearModel();
+    const auto users = QVector<Users>::fromStdVector(
+        m_db->userRepo()->getSorted(sort));
+    beginInsertRows(QModelIndex(), m_data.count(), m_data.count() + users.size() - 1);
+    m_data = QList<Users>::fromVector(users);
+    endInsertRows();
+}
+
+void UserModel::loadFilteredUsers(const QStringList &filters)
+{
+    clearModel();
+    std::string request_str = "";
+    for(const auto &filter: filters){
+        request_str.append(" AND " + filter.toStdString());
+    }
+    const auto userIDs = m_db->userRepo()->find({{"ID","ID" + request_str}});
+    QVector<Users> users;
+    for(const auto& id: userIDs){
+        users.append(*m_db->userRepo()->get(id));
+    }
+    beginInsertRows(QModelIndex(), m_data.count(), m_data.count() + users.size() - 1);
+    m_data = QList<Users>::fromVector(users);
+    endInsertRows();
+}
+
 void UserModel::deleteUser(const int& id)
 {
     m_db->workerRepo()->Delete(m_db->userRepo()->get(id)->getWorkerID());
     m_db->userRepo()->Delete(id);
+}
+
+QList<qreal> UserModel::getAllSalaries()
+{
+    QList<qreal> result;
+    auto workers = m_db->workerRepo()->getAll();
+    for(const auto &worker: workers){
+        result << worker.getSalary();
+    }
+    return result;
+}
+
+QStringList UserModel::getNCharsOf(const QString &target, const int& count)
+{
+    return m_db->userRepo()->getNCharsOf(target, count);
 }
 
 QHash<int, QByteArray> UserModel::roleNames() const

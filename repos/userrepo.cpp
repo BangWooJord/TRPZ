@@ -14,10 +14,9 @@ std::vector<int> UserRepo::find(const std::map<std::string, std::string> values)
     for(const auto &value_pair: values){
         QString key = QString::fromStdString(value_pair.first);
         QString value = QString::fromStdString(value_pair.second);
-        string_query.append(QString("%1=%2,").arg(key, value));
+        string_query.append(QString("%1=%2 AND ").arg(key, value));
     }
-    string_query.chop(1);
-
+    string_query.chop(5);
     QSqlQuery query;
     query.exec(string_query);
     while(query.next()){
@@ -88,21 +87,24 @@ std::vector<Users> UserRepo::getSorted(const int &sort)
 {
     QStringList sort_keys;
     switch (sort) {
-    case USER_FILTERS::NameUp:
-        qDebug() << "NameUp";
-        sort_keys << "Name ASC";
+    case USER_FILTERS::UsernameUp:
+        sort_keys << "Username ASC";
         break;
-    case USER_FILTERS::NameDown:
-        qDebug() << "NameDown";
-        sort_keys << "Name DESC";
+    case USER_FILTERS::UsernameDown:
+        sort_keys << "Username DESC";
+        break;
+    case USER_FILTERS::UserTypeUp:
+        sort_keys << "UserType ASC";
+        break;
+    case USER_FILTERS::UserTypeDown:
+        sort_keys << "UserType DESC";
         break;
     }
-
 
     std::vector<Users> item_list;
     QString string_query = "SELECT * FROM Users ORDER BY ";
     for(const auto& key: sort_keys){
-        string_query.append(key + ", ");
+        string_query.append(key + ",");
     }
     string_query.chop(1);
     QSqlQuery query;
@@ -113,6 +115,17 @@ std::vector<Users> UserRepo::getSorted(const int &sort)
                                   ,query.value("Password").toString()
                                   ,query.value("UserType").toUInt()
                                   ,query.value("WorkerID").toUInt()));
+    }
+    return item_list;
+}
+
+QStringList UserRepo::getNCharsOf(const QString &target, const int& count)
+{
+    QStringList item_list;
+    QSqlQuery query;
+    query.exec(QString("SELECT LEFT(%1,%2) AS 'ANS' FROM Users").arg(target).arg(count));
+    while(query.next()){
+        item_list << query.value("ANS").toString();
     }
     return item_list;
 }

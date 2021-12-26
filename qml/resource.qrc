@@ -7,5 +7,6 @@
         <file>UsersPage.qml</file>
         <file>NewUserForm.qml</file>
         <file>NewWorkerForm.qml</file>
+        <file>ManagerWindow.qml</file>
     </qresource>
 </RCC>

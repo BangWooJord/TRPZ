@@ -97,3 +97,9 @@ void WorkerRepo::Delete(int id)
     QSqlQuery query;
     query.exec(QString("DELETE FROM Workers WHERE ID=%1").arg(id));
 }
+
+std::vector<Worker> WorkerRepo::getSorted(const int &sort)
+{
+    std::vector<Worker> result;
+    return result;
+}

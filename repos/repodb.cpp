@@ -39,9 +39,11 @@ void RepoDB::authUser(const QString &username, const QString &pass)
                         QString("'%1'").arg(username).toStdString()}});
     if(!userIDArray.size()) emit authDenied();
     else{
-        const auto userID = userIDArray[0];
-        emit (m_userRepo->get(userID)->getPassword() == pass)
-            ? authAccepted(username) : authDenied();
+        const auto user = m_userRepo->get(userIDArray[0]);
+        emit (user->getPassword() == pass)
+            ? authAccepted(username,
+                m_roleRepo->get(user->getUserType())->getName())
+            : authDenied();
     }
 }
 

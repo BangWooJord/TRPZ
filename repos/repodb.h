@@ -45,7 +45,7 @@ public:
     Q_INVOKABLE QList<int> getAllWarehouseIDs() const;
 
 signals:
-    void authAccepted(QString username);
+    void authAccepted(const QString& username, const QString& userType);
     void authDenied();
 
 private:

@@ -72,3 +72,9 @@ void RoleRepo::Delete(int id)
     QSqlQuery query;
     query.exec(QString("DELETE FROM Roles WHERE ID=%1").arg(id));
 }
+
+std::vector<Role> RoleRepo::getSorted(const int &sort)
+{
+    std::vector<Role> result;
+    return result;
+}
